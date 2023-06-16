@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Temu Kembali Informasi</title>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var div = document.getElementById("searchBox");
+      var originalBorderColor = window.getComputedStyle(div).getPropertyValue("border-color");
+
+      function changeBorderColor() {
+          div.classList.toggle("clicked");
+      }
+
+      function handleClickOutside(event) {
+          if (!div.contains(event.target)) {
+              div.classList.remove("clicked");
+          }
+      }
+
+      div.addEventListener("click", changeBorderColor);
+      document.addEventListener("click", handleClickOutside);
+  });
+</script>
+{% endblock %}
+
+{%  block body %}
+<header>
+  <div class="heading">
+    <a href="">Temu Kembali Informasi</a>
+  </div>
+</header>
+<main>
+  <div class="content">
+    <article class="subtitle">
+      <h1>GugeL</h1>
+    </article>
+    <article class="search">
+      <div class="search-box" id="searchBox" onclick="changeBorderColor()">
+        <input type="text" placeholder="Type to search" class="search-txt">
+        <a href="" class="search-btn">
+          <span class="material-symbols-outlined">
+            search
+          </span>
+        </a>
+      </div>
+    </article>
+  </div>
+</main>
+{% endblock %}
