@@ -28,22 +28,22 @@
   <div class="heading">
     <a href="">Temu Kembali Informasi</a>
   </div>
+  <div class="search">
+    <div class="search-box" id="searchBox" onclick="changeBorderColor()">
+      <input type="text" placeholder="Type to search" class="search-txt">
+      <a href="" class="search-btn">
+        <span class="material-symbols-outlined">
+          search
+        </span>
+      </a>
+    </div>
+  </div>
 </header>
 <main>
-  <div class="content">
-    <article class="subtitle">
-      <h1>Gugel</h1>
-    </article>
-    <article class="search">
-      <div class="search-box" id="searchBox" onclick="changeBorderColor()">
-        <input type="text" placeholder="Type to search" class="search-txt">
-        <a href="" class="search-btn">
-          <span class="material-symbols-outlined">
-            search
-          </span>
-        </a>
-      </div>
-    </article>
-  </div>
+  <ul>
+    {% for document in documents %}
+    <li>{{ document }}</li>
+    {% endfor %}
+  </ul>
 </main>
 {% endblock %}
