@@ -21,6 +21,26 @@
     <p class="dataClass">{{ document.class }}</p>
   </div>
   {% endfor %}
+
+  <h1>Data Dokumen</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Dokumen</th>
+                <th>Isi Dokumen</th>
+                <th>Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dokumen in dokumenz %}
+            <tr>
+                <td>{{ dokumen.dokumen }}</td>
+                <td>{{ dokumen.isiDocx }}</td>
+                <td>{{ dokumen.class }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </main>
 <footer>
   <div class="footer-one">

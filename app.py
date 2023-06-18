@@ -1,14 +1,11 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from Sastrawi.Stemmer.StemmerFactory import StemmerFactory 
 
 load_dotenv()
-factory = StemmerFactory()
-stemmer = factory.create_stemmer()
 
 app = Flask(__name__)
 
@@ -39,32 +36,68 @@ def retrieve():
     documents.append(search_query)
     
     documents = [doc.lower() for doc in documents] # Case Folding
-    documents = [stemmer.stem(teks) for teks in documents] # Stemming
-    # Inisialisasi objek TfidfVectorizer dengan smooth_idf=False
-    vectorizer = TfidfVectorizer(smooth_idf=False)
+    
+    def KNN_Model(documents, k=3):
+        # Inisialisasi objek TfidfVectorizer dengan smooth_idf=False
+        vectorizer = TfidfVectorizer(smooth_idf=False)
 
-    # Proses teks menggunakan fit_transform
-    tfidf_matrix = vectorizer.fit_transform(documents)
+        # Proses teks menggunakan fit_transform
+        tfidf_matrix = vectorizer.fit_transform(documents)
 
-    # Hitung kemiripan vektor dokumen
-    similarity_matrix = cosine_similarity(tfidf_matrix)
+        # Hitung kemiripan vektor dokumen
+        similarity_matrix = cosine_similarity(tfidf_matrix)
 
-    document_index = len(documents)-1  # Indeks Query
+        document_index = len(documents)-1  # Indeks Query
 
-    # Melakukan prediksi label Dokumen 5 menggunakan k-NN
-    k = 3  # Jumlah tetangga terdekat yang akan digunakan dalam prediksi
-    neighbors_indices = similarity_matrix[document_index].argsort()[-k-1:-1]
+        # Melakukan prediksi label Dokumen 5 menggunakan k-NN
+        k = 3  # Jumlah tetangga terdekat yang akan digunakan dalam prediksi
+        neighbors_indices = similarity_matrix[document_index].argsort()[-k-1:-1]
 
-    predicted_labels = [label[i] for i in neighbors_indices]
+        predicted_labels = [label[i] for i in neighbors_indices]
 
-    # Menampilkan prediksi label Dokumen 5
-    predicted_label = max(set(predicted_labels), key=predicted_labels.count)
+        # Menampilkan prediksi label Dokumen 5
+        predicted_label = max(set(predicted_labels), key=predicted_labels.count)
+        return predicted_label
+    
+    predicted_label = KNN_Model(documents, k=3)
 
     queryx = {'class': predicted_label}
     projectiony = {'_id': 0, 'dokumen': 1, 'isiDocx': 1, 'class': 1 }
     documenty = collection.find(queryx, projectiony)
 
-    return render_template('retrieve.html', strings=predicted_label, search_query=search_query,   documenty=documenty)
+    def cosine_similarity_search(query, documents):
+        # Menginisialisasi vektorizer TF-IDF
+        vectorizer = TfidfVectorizer(smooth_idf=False)
+        
+        # Mengubah dokumen menjadi matriks TF-IDF
+        tfidf_matrix = vectorizer.fit_transform(documents)
+        
+        # Mengubah query menjadi vektor TF-IDF
+        query_vector = vectorizer.transform([query])
+        
+        # Menghitung similarity antara vektor query dan dokumen menggunakan cosine similarity
+        similarities = cosine_similarity(query_vector, tfidf_matrix)
+        
+        # Mengurutkan dokumen berdasarkan similarity tertinggi
+        sorted_indices = similarities.argsort()[0][::-1]
+        
+        # Mendapatkan dokumen terurut berdasarkan indeks beserta nilai cosine similarity
+        results = [documents[index] for index in sorted_indices if index != len(documents) - 1 and similarities[0][index] != 0]
+        
+        return results
+
+    query = documents[len(documents)-1 ]
+    results_xzy = cosine_similarity_search(query, documents)
+
+    queryxz = { 'isiDocx': { '$in': results_xzy } }
+    resultxz = collection.find(queryxz)
+
+    yakult = []
+    for result in resultxz:
+        index = results_xzy.index(result['isiDocx'])
+        yakult.insert(index, result)
+
+    return render_template('retrieve.html', strings=predicted_label, search_query=search_query, documenty=documenty, dokumenz = yakult)
 
 if __name__ == "__main__":
     app.run(debug=True)
