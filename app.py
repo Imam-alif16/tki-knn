@@ -4,8 +4,11 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory 
 
 load_dotenv()
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
 
 app = Flask(__name__)
 
@@ -33,19 +36,20 @@ def retrieve():
     search_query = request.form['search']
 
     documents = text
-    print(documents)
     documents.append(search_query)
-    print(documents)
-    # # Inisialisasi objek TfidfVectorizer dengan smooth_idf=False
+    
+    documents = [doc.lower() for doc in documents] # Case Folding
+    documents = [stemmer.stem(teks) for teks in documents] # Stemming
+    # Inisialisasi objek TfidfVectorizer dengan smooth_idf=False
     vectorizer = TfidfVectorizer(smooth_idf=False)
 
-    # # Proses teks menggunakan fit_transform
+    # Proses teks menggunakan fit_transform
     tfidf_matrix = vectorizer.fit_transform(documents)
 
-    # # Hitung kemiripan vektor dokumen
+    # Hitung kemiripan vektor dokumen
     similarity_matrix = cosine_similarity(tfidf_matrix)
 
-    document_index = len(documents)-1  # Indeks Dokumen 5 dalam daftar dokumen (indeks dimulai dari 0)
+    document_index = len(documents)-1  # Indeks Query
 
     # Melakukan prediksi label Dokumen 5 menggunakan k-NN
     k = 3  # Jumlah tetangga terdekat yang akan digunakan dalam prediksi
