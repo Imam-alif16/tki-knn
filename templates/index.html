@@ -20,6 +20,10 @@
       div.addEventListener("click", changeBorderColor);
       document.addEventListener("click", handleClickOutside);
   });
+
+  function submitForm() {
+  document.getElementById("searchForm").submit();
+}
 </script>
 {% endblock %}
 
@@ -36,12 +40,14 @@
     </article>
     <article class="search">
       <div class="search-box" id="searchBox" onclick="changeBorderColor()">
-        <input type="text" placeholder="Type to search" class="search-txt">
-        <a href="" class="search-btn">
-          <span class="material-symbols-outlined">
-            search
-          </span>
-        </a>
+        <form action="/retrieve" method="POST" id="searchForm">
+          <input type="search" placeholder="Ketik untuk mencari" class="search-txt" name="search">
+          <a href="#" class="search-btn" onclick="submitForm()">
+            <span class="material-symbols-outlined">
+              search
+            </span>
+          </a>
+        </form>
       </div>
     </article>
   </div>
