@@ -66,9 +66,5 @@ def retrieve():
 
     return render_template('retrieve.html', strings=predicted_label, search_query=search_query,   documenty=documenty)
 
-@app.route('/admin')
-def admin():
-    return redirect(url_for('user', name='Vallianz!'))
-
 if __name__ == "__main__":
     app.run(debug=True)

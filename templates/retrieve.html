@@ -2,54 +2,43 @@
 
 {% block head %}
 <title>Temu Kembali Informasi</title>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-      var div = document.getElementById("searchBox");
-      var originalBorderColor = window.getComputedStyle(div).getPropertyValue("border-color");
-
-      function changeBorderColor() {
-          div.classList.toggle("clicked");
-      }
-
-      function handleClickOutside(event) {
-          if (!div.contains(event.target)) {
-              div.classList.remove("clicked");
-          }
-      }
-
-      div.addEventListener("click", changeBorderColor);
-      document.addEventListener("click", handleClickOutside);
-  });
-</script>
 {% endblock %}
 
 {%  block body %}
 <header>
   <div class="heading">
-    <a href="">Temu Kembali Informasi</a>
-  </div>
-  <div class="search">
-    <div class="search-box" id="searchBox" onclick="changeBorderColor()">
-      <input type="text" placeholder="Type to search" class="search-txt">
-      <a href="" class="search-btn">
-        <span class="material-symbols-outlined">
-          search
-        </span>
-      </a>
-    </div>
+    <a href="/">Temu Kembali Informasi</a>
   </div>
 </header>
-<main>
-  <div class="queryCategory">
-    <p class="resultQuery">Hasil untuk pencarian "{{ search_query }}":</p>
-    <p class="resultClass"></p>
-    <p class="similarDocument">Hasil dokumen untuk class yang sama dengan pencarian</p>
-    <ul>
-      {% for document in documenty%}
-      <li>{{ document }}</li>
-      {% endfor %}
-    </ul>
-    <p>{{ strings }}</p>
+<main class="retrieve-main">
+  <p class="resultQuery">Hasil untuk pencarian "{{ search_query }}":</p>
+  <p class="resultClass">Diprediksi dengan label: {{ strings }}</p>
+  <p class="similarDocument">Hasil dokumen untuk class yang sama dengan pencarian:</p>
+  {% for document in documenty%}
+  <div class="similarDocumentBox">
+    <p class="dataDocument">{{ document.dokumen }}</p>
+    <p class="dataValue">{{ document.isiDocx }}</p>
+    <p class="dataClass">{{ document.class }}</p>
   </div>
+  {% endfor %}
 </main>
+<footer>
+  <div class="footer-one">
+    <div class="info">
+      <h3>Tentang website ini</h3>
+      <p>Website ini dibuat oleh kami untuk menyelesaikan tugas akhir mata kuliah Temu Kembali Informasi</p>
+    </div>
+    <div class="team">
+      <h3>Tim kami</h3>
+      <p>Tirta Agung Jati</p>
+      <p>Abimanyu Wahyu Palagan</p>
+      <p>Muhammad Imam Alif</p>
+      <p>Fatkhi Nur Akhsan</p>
+      <p>Agung Rashif Madani</p>
+    </div>
+  </div>
+  <div class="footer-two">
+    <p>Made by love @2023</p>
+  </div>
+</footer>
 {% endblock %}

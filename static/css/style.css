@@ -35,7 +35,6 @@ header .heading {
 }
 
 header .heading a {
-  all: unset;
   text-decoration: none;
   color: #616A7B;
 }
@@ -149,4 +148,107 @@ main .content .search .search-box .search-txt::placeholder {
 main .content .search .search-box .search-btn {
   padding-top: 4px;
   color: #434C5E;
+}
+
+.retrieve-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 4rem 7rem;
+}
+
+.retrieve-main .resultQuery {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+}
+
+.retrieve-main .resultClass {
+  font-size: 1.8rem;
+  margin-bottom: 8rem;
+  color: #7489A6;
+  text-transform: capitalize;
+}
+
+.retrieve-main .similarDocument {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+}
+
+.retrieve-main .similarDocumentBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #7489A6;
+}
+
+.retrieve-main .similarDocumentBox .dataDocument {
+  color: #000000;
+  font-size: 1.4rem;
+  text-transform: capitalize;
+  margin-bottom: 0.1rem;
+  font-weight: 500;
+}
+
+.retrieve-main .similarDocumentBox .dataValue {
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  margin-bottom: 0.1rem;
+}
+
+.retrieve-main .similarDocumentBox .dataClass {
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  margin-bottom: 2.4rem;
+}
+
+footer {
+  background-color: #1E242B;
+  color: #EEEEEE;
+
+}
+
+footer .footer-one {
+  padding: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+footer .footer-one .info {
+  width: 50ch;
+  margin-left: 2rem;
+}
+
+footer .footer-one .info h3 {
+  font-size: 1.6rem;
+  font-family: 'Varela', sans-serif;
+  margin-bottom: 3rem;
+}
+
+footer .footer-one .info p {
+  font-size: 1.2rem;
+}
+
+footer .footer-one .team {
+  margin-right: 2rem;
+}
+
+footer .footer-one .team h3 {
+  font-size: 1.6rem;
+  font-family: 'Varela', sans-serif;
+  margin-bottom: 3rem;
+}
+
+footer .footer-one .team p {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+footer .footer-two {
+  background-color: #222930;
+  padding: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
 }
