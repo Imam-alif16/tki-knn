@@ -40,8 +40,16 @@
   </div>
 </header>
 <main>
-  <ul>
-    <li>{{ strings }}</li>
-  </ul>
+  <div class="queryCategory">
+    <p class="resultQuery">Hasil untuk pencarian "{{ search_query }}":</p>
+    <p class="resultClass"></p>
+    <p class="similarDocument">Hasil dokumen untuk class yang sama dengan pencarian</p>
+    <ul>
+      {% for document in documenty%}
+      <li>{{ document }}</li>
+      {% endfor %}
+    </ul>
+    <p>{{ strings }}</p>
+  </div>
 </main>
 {% endblock %}

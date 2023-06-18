@@ -122,6 +122,13 @@ main .content .search .search-box {
   align-items: center;
 }
 
+main .content .search .search-box form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 main .content .search .clicked {
   border: 0.3rem solid #434C5E;
 }

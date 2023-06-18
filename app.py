@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -16,7 +16,7 @@ db = client[os.environ.get('MONGO_DB_DATABASE')]
 def index():
     return render_template('index.html')
 
-@app.route('/retrieve')
+@app.route('/retrieve', methods=['POST'])
 def retrieve():
     collection = db[os.environ.get('MONGO_DB_COLLECTION')]
 
@@ -30,9 +30,11 @@ def retrieve():
     text = [str(document['isiDocx']) for document in documentx]
     label = [str(document['class']) for document in classx]
     
+    search_query = request.form['search']
+
     documents = text
     print(documents)
-    documents.append("tanding sepakbola persebaya kampanye pemilu 2009 tunda")
+    documents.append(search_query)
     print(documents)
     # # Inisialisasi objek TfidfVectorizer dengan smooth_idf=False
     vectorizer = TfidfVectorizer(smooth_idf=False)
@@ -54,7 +56,11 @@ def retrieve():
     # Menampilkan prediksi label Dokumen 5
     predicted_label = max(set(predicted_labels), key=predicted_labels.count)
 
-    return render_template('retrieve.html', strings=predicted_label)
+    queryx = {'class': predicted_label}
+    projectiony = {'_id': 0, 'dokumen': 1, 'isiDocx': 1, 'class': 1 }
+    documenty = collection.find(queryx, projectiony)
+
+    return render_template('retrieve.html', strings=predicted_label, search_query=search_query,   documenty=documenty)
 
 @app.route('/admin')
 def admin():
