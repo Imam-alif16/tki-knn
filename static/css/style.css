@@ -201,6 +201,39 @@ main .content .search .search-box .search-btn {
   margin-bottom: 2.4rem;
 }
 
+.retrieve-main .cosineSimilarity {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  margin-top: 8rem;
+}
+
+.retrieve-main .cosineSimilarityBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #7489A6;
+}
+
+.retrieve-main .cosineSimilarityBox .dataDocument {
+  color: #000000;
+  font-size: 1.4rem;
+  text-transform: capitalize;
+  margin-bottom: 0.1rem;
+  font-weight: 500;
+}
+
+.retrieve-main .cosineSimilarityBox .dataValue {
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  margin-bottom: 0.1rem;
+}
+
+.retrieve-main .cosineSimilarityBox .dataClass {
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  margin-bottom: 2.4rem;
+}
+
 footer {
   background-color: #1E242B;
   color: #EEEEEE;
