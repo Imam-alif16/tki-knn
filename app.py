@@ -18,9 +18,15 @@ def index():
 def retrieve():
     collection = db[os.environ.get('MONGO_DB_COLLECTION')]
 
-    documents = collection.find()
+    query = {}
+    projection = {'_id': 0,'isiDocx': 1}
 
-    return render_template('retrieve.html', documents=documents)
+    documents = collection.find(query, projection)
+
+    strings = [str(document['isiDocx']) for document in documents]
+    print(strings)
+
+    return render_template('retrieve.html', strings=strings)
 
 @app.route('/admin')
 def admin():
