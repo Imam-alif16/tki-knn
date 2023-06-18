@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, request
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from sklearn.feature_extraction.text import TfidfVectorizer
