@@ -12,6 +12,6 @@ MONGO_DB_COLLECTION = <your database collection>
 pip install Flask
 pip install pymongo
 pip install dotenv
-pip install load_env
+pip install load_dotenv
 pip install scikit-learn
 ```
