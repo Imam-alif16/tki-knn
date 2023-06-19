@@ -82,7 +82,7 @@ def retrieve():
         sorted_indices = similarities.argsort()[0][::-1]
         
         # Mendapatkan dokumen terurut berdasarkan indeks beserta nilai cosine similarity
-        results = [documents[index] for index in sorted_indices if index != len(documents) - 1 and similarities[0][index] != 0]
+        results = [documents[index] for index in sorted_indices if index != len(documents) - 1 and similarities[0][index] > 0]
         
         return results
 
